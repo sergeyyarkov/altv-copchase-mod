@@ -3,6 +3,8 @@ import * as chat from 'chat'
 import config from '../../config.mjs'
 import { isPlayerAdmin } from '../helpers/helpers.mjs'
 
+import weapons from '../../weapons.json'
+
 chat.registerCmd('pos', player => {
   if (!isPlayerAdmin(player)) return chat.send(player, `{EE9A00}[SERVER]: {FF0000}Вам недоступна эта команда!`)
   
@@ -38,4 +40,19 @@ chat.registerCmd('car', (player, args) => {
   } catch (error) {
     chat.send(player, `{EE9A00}[SERVER]: {FF0000}Машины "${args[0]}" не существует!`)
   }
+})
+
+chat.registerCmd('weapon', (player, args) => {
+  if (!isPlayerAdmin(player)) return chat.send(player, `{EE9A00}[SERVER]: {FF0000}Вам недоступна эта команда!`)
+
+  if (!args || !args[0]) {
+    return chat.send(player, `{EE9A00}[SERVER]: {FFF}/weapon [weapon name]`);
+  }
+
+  Object.keys(weapons).map(category => {
+    if (weapons[category].hasOwnProperty(args[0])) {
+      player.giveWeapon(weapons[category][args[0]], 9999, true)
+      return
+    }
+  })
 })

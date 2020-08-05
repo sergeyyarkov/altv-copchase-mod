@@ -13,4 +13,3 @@ alt.onServer('vehicle:setInto', (newVehicle) => {
     native.setPedIntoVehicle(localPlayer, newVehicle.scriptID, -1)
   }, 300)
 })
-

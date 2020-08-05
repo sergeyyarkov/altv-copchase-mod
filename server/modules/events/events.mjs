@@ -10,6 +10,7 @@ alt.on('playerConnect', (player) => {
 alt.on('playerDeath', (player) => {
   alt.setTimeout(() => {
     player.spawn(config.spawn.x, config.spawn.y,config.spawn.z)
+    player.removeAllWeapons()
   }, 3000);
 })
 

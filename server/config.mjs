@@ -8,7 +8,6 @@ export default {
     { socialId: '370262977' }
   ],
   skins: [
-    "A_C_Boar",
     "A_F_M_Beach_01",
     "A_F_M_BevHills_01",
     "A_F_M_BevHills_02",
