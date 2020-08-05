@@ -19,6 +19,7 @@ import './modules/commands/admin/weapon.mjs'
 import './modules/commands/admin/tp.mjs'
 import './modules/commands/admin/gethere.mjs'
 import './modules/commands/admin/kick.mjs'
+import './modules/commands/admin/location.mjs'
 
 // Player
 import './modules/commands/player/spawn.mjs'
