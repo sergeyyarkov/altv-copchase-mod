@@ -16,4 +16,5 @@ registerCmd('gethere', (player, args) => {
   }
 
   target.pos = player.pos
+  target.dimension = player.dimension
 })

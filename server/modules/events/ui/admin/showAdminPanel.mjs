@@ -1,5 +1,5 @@
 import alt from 'alt-server'
-import { isPlayerAdmin } from '../../helpers/helpers.mjs'
+import { isPlayerAdmin } from '../../../helpers/helpers.mjs'
 
 alt.onClient('showAdminPanel', player => {
   if (!isPlayerAdmin(player)) return false

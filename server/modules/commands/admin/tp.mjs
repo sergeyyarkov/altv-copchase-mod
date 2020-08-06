@@ -16,4 +16,5 @@ registerCmd('tp', (player, args) => {
   }
 
   player.pos = target.pos
+  player.dimension = target.dimension
 })

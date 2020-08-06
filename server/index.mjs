@@ -3,10 +3,16 @@
 */
 
 // Admin ui
-import './modules/events/ui/showAdminPanel.mjs'
-import './modules/events/ui/getHealth.mjs'
-import './modules/events/ui/godMode.mjs'
-import './modules/events/ui/kickPlayer.mjs'
+import './modules/events/ui/admin/showAdminPanel.mjs'
+import './modules/events/ui/admin/getHealth.mjs'
+import './modules/events/ui/admin/godMode.mjs'
+import './modules/events/ui/admin/kickPlayer.mjs'
+import './modules/events/ui/admin/killPlayer.mjs'
+import './modules/events/ui/admin/spawnCar.mjs'
+import './modules/events/ui/admin/teleportToLocation.mjs'
+import './modules/events/ui/admin/giveWeapon.mjs'
+import './modules/events/ui/admin/teleportToPlayer.mjs'
+import './modules/events/ui/admin/teleportToMe.mjs'
 
 import './modules/events/playerConnect.mjs'
 import './modules/events/playerDisconnect.mjs'

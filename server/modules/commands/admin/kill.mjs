@@ -16,4 +16,5 @@ registerCmd('kill', (player, args) => {
   }
 
   target.health = 0
+  alt.emitClient(target, 'player:notify', `Вы были убиты администратором сервера`)
 })
