@@ -1,5 +1,5 @@
 import alt from 'alt-server'
-import { registerCmd, send } from 'chat'
+import { registerCmd, broadcast, send } from 'chat'
 import { isPlayerAdmin } from '../../helpers/helpers.mjs'
 
 registerCmd('kick', (player, args) => {
@@ -15,5 +15,8 @@ registerCmd('kick', (player, args) => {
     return send(player, `{EE9A00}[SERVER]: {FFF}Игрок с ID: "${args[0]}" не найден`);
   }
 
-  target.kick()
+  alt.emitClient(target, 'player:notify', `Вы были кикнуты с этого сервера`)
+
+  alt.setTimeout(() => target.kick(), 300)
+  broadcast(`{EE9A00}[SERVER]: {FFF}Игрок {1CD8FD}${target.name} {FFF}был кикнут с сервера`)
 })

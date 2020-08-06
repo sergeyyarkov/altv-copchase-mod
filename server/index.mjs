@@ -2,6 +2,12 @@
   Events
 */
 
+// Admin ui
+import './modules/events/ui/showAdminPanel.mjs'
+import './modules/events/ui/getHealth.mjs'
+import './modules/events/ui/godMode.mjs'
+import './modules/events/ui/kickPlayer.mjs'
+
 import './modules/events/playerConnect.mjs'
 import './modules/events/playerDisconnect.mjs'
 import './modules/events/playerDeath.mjs'
