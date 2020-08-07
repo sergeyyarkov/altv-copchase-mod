@@ -79,7 +79,6 @@ class Copchase {
     this.isStarted = false
     this.suspect = null
     this.players = []
-    // this.waitingPlayers = []
     this.blips = {}
 
     setTimeout(() => {
@@ -99,7 +98,6 @@ class Copchase {
 
   isPlayerInWaitingRoom(player) {
     if(this.waitingPlayers.find(_player => _player.name === player.name) !== undefined) {
-      send(player, '{EE9A00}[COPCHASE]: {FF0000}Вы уже в комнате ожидания!')
       return true
     } else {
       return false
@@ -125,6 +123,12 @@ class Copchase {
 
   messageToWaitingPlayers(message) {
     this.waitingPlayers.forEach(_player => send(_player, message))
+  }
+
+  midsizedMessageToWaitingPlayers(message, description, delay) {
+    this.waitingPlayers.forEach(_player => {
+      alt.emitClient(_player, 'player:showMidsizedMessage', message, description, delay)
+    })
   }
 
   notifyPolicePlayers(message) {
@@ -209,11 +213,14 @@ class Copchase {
     const interval = setInterval(() => {
       timeToStart = timeToStart - 1
 
+      if (this.waitingPlayers.length < this.minPlayers) {
+        this.midsizedMessageToWaitingPlayers('~r~Недостаточно игроков для старта!', '', 3000)
+
+        clearInterval(interval)
+        return
+      }
+
       if (timeToStart <= 0) {
-        // if (this.waitingPlayers.length >= 2) {
-        //   broadcast(`Недостаточно игроков для старта!`)
-        //   return
-        // }
 
         this.isStarted = true
 
@@ -251,10 +258,7 @@ class Copchase {
         clearInterval(interval)
         return true
       }
-
-      this.waitingPlayers.forEach(_player => {
-        alt.emitClient(_player, 'player:showMidsizedMessage', `${timeToStart}`, '', 1000)
-      })
+      this.midsizedMessageToWaitingPlayers(timeToStart, '', 1000)
       // this.messageToWaitingPlayers(`[COPCHASE]: Игра начнется через: ${timeToStart}`)
     }, 1000)
   }

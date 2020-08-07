@@ -830,6 +830,7 @@ listCommandsMenu.AddItem(new UIMenuItem('Сменить скин', `/skin [0 - 7
 listCommandsMenu.AddItem(new UIMenuItem('Появиться на спауне', `/spawn`))
 listCommandsMenu.AddItem(new UIMenuItem('Узнать текущий онлайн', `/online`))
 listCommandsMenu.AddItem(new UIMenuItem('Узнать Social Club ID', `/scid`))
+listCommandsMenu.AddItem(new UIMenuItem('Выйти из комнаты ожидания', `/exit`))
 
 const adminMenu = new Menu("Админ Панель", "Выполняйте админ-функции", menuPos)
 const kickPlayerMenu = new Menu("Кикнуть игрока", "Сервер кикнет любого игрока", menuPos)

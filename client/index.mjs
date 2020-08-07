@@ -34,7 +34,7 @@ alt.onServer('vehicle:setInto', (newVehicle) => {
 
   alt.setTimeout(() => {
     native.setPedIntoVehicle(localPlayer, newVehicle.scriptID, -1)
-  }, 300)
+  }, 400)
 })
 
 alt.onServer('admin:setStat', () => {

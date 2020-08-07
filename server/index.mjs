@@ -41,6 +41,7 @@ import './modules/commands/player/skin.mjs'
 import './modules/commands/player/scid.mjs'
 import './modules/commands/player/copchase.mjs'
 import './modules/commands/player/mydimension.mjs'
+import './modules/commands/player/exit.mjs'
 
 /*
   Default text labels

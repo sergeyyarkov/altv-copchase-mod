@@ -17,6 +17,7 @@ alt.on('playerDeath', (player) => {
   
   alt.setTimeout(() => {
     player.spawn(config.spawn.x, config.spawn.y,config.spawn.z)
+    player.dimension = 0
     player.removeAllWeapons()
     alt.emitClient(player, 'player:setInvincible')
   }, 5000)
