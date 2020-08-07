@@ -818,6 +818,19 @@ const weapons = {
   }
 }
 
+const helpMenu = new Menu("Помощь", "Помощь по игре на сервере", menuPos)
+const listCommandsMenu = new Menu("Команды", "Узнайте список доступных команд", menuPos)
+
+const commandsItem = new UIMenuItem('Достуные команды', `Узнайте список доступных команд`)
+
+helpMenu.BindMenuToItem(listCommandsMenu, commandsItem)
+
+listCommandsMenu.AddItem(new UIMenuItem('Играть в copchase', `/copchase`))
+listCommandsMenu.AddItem(new UIMenuItem('Сменить скин', `/skin [0 - 700]`))
+listCommandsMenu.AddItem(new UIMenuItem('Появиться на спауне', `/spawn`))
+listCommandsMenu.AddItem(new UIMenuItem('Узнать текущий онлайн', `/online`))
+listCommandsMenu.AddItem(new UIMenuItem('Узнать Social Club ID', `/scid`))
+
 const adminMenu = new Menu("Админ Панель", "Выполняйте админ-функции", menuPos)
 const kickPlayerMenu = new Menu("Кикнуть игрока", "Сервер кикнет любого игрока", menuPos)
 const killPlayerMenu = new Menu('Убить игрока', "Сервер моментально убьет игрока", menuPos)
@@ -890,14 +903,43 @@ weaponsMenu.ItemSelect.on(item => {
 })
 
 alt.on('keyup', key => {
-	if (key === 113) { // F2
-  	alt.emitServer('showAdminPanel')
-	}
+  if (key === 112) {
+    if (
+      listCommandsMenu.Visible
+    || adminMenu.Visible
+		|| kickPlayerMenu.Visible 
+		|| killPlayerMenu.Visible 
+		|| carSpawnMenu.Visible 
+		|| teleportToLocationMenu.Visible
+		|| myPersonMenu.Visible
+		|| weaponsMenu.Visible
+		|| teleportToPlayerMenu.Visible
+		|| teleportToMeMenu.Visible
+	) {
+    listCommandsMenu.Close()
+    adminMenu.Close()
+    kickPlayerMenu.Close()
+		killPlayerMenu.Close()
+		carSpawnMenu.Close()
+		teleportToLocationMenu.Close()
+		myPersonMenu.Close()
+		weaponsMenu.Close()
+		teleportToPlayerMenu.Close()
+		teleportToMeMenu.Close()
+  }
+    helpMenu.Visible ? helpMenu.Close() : helpMenu.Open()
+  }
+
+	if (key === 113) {
+    alt.emitServer('showAdminPanel')
+  }
 })
 
 alt.onServer('ui:showAdminPanel', () => {
 	if (
-			kickPlayerMenu.Visible 
+      helpMenu.Visible
+    || listCommandsMenu.Visible
+		|| kickPlayerMenu.Visible 
 		|| killPlayerMenu.Visible 
 		|| carSpawnMenu.Visible 
 		|| teleportToLocationMenu.Visible
@@ -907,6 +949,8 @@ alt.onServer('ui:showAdminPanel', () => {
 		|| teleportToMeMenu.Visible
 	) 
 	{
+    helpMenu.Close()
+    listCommandsMenu.Close()
 		kickPlayerMenu.Close()
 		killPlayerMenu.Close()
 		carSpawnMenu.Close()

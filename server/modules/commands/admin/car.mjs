@@ -12,6 +12,7 @@ registerCmd('car', (player, args) => {
   try {
     const newVehicle = new alt.Vehicle(args[0], player.pos.x, player.pos.y, player.pos.z, 0, 0, 0)
     newVehicle.numberPlateText = 'ADMIN'
+    newVehicle.dimension = player.dimension
  
     alt.emitClient(player, 'vehicle:setInto', newVehicle)
   } catch (error) {

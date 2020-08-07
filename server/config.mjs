@@ -12,7 +12,8 @@ export default {
     epsilon: { x:-695.025, y: 82.955, z: 55.855 }
   },
   admins: [
-    { socialId: '370262977' }
+    { socialId: '370262977' },
+    { socialId: '401448051' }
   ],
   defaultModel: 'mp_m_freemode_01'
 }

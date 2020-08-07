@@ -17,6 +17,7 @@ import './modules/events/ui/admin/teleportToMe.mjs'
 import './modules/events/playerConnect.mjs'
 import './modules/events/playerDisconnect.mjs'
 import './modules/events/playerDeath.mjs'
+import './modules/events/playerLeftVehicle.mjs'
 
 /*
   Commands
@@ -38,6 +39,8 @@ import './modules/commands/player/spawn.mjs'
 import './modules/commands/player/online.mjs'
 import './modules/commands/player/skin.mjs'
 import './modules/commands/player/scid.mjs'
+import './modules/commands/player/copchase.mjs'
+import './modules/commands/player/mydimension.mjs'
 
 /*
   Default text labels

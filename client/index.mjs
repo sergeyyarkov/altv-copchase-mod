@@ -17,6 +17,10 @@ alt.onServer('player:notify', message => {
   native.endTextCommandThefeedPostTicker(false, false)
 })
 
+alt.onServer('player:showMidsizedMessage', (message, description, delay) => {
+  NativeUI.MidsizedMessage.ShowMidsizedMessage(message, description, delay)
+})
+
 alt.onServer('player:setInvincible', () => {
   native.setEntityInvincible(alt.Player.local.scriptID, true)
 })
