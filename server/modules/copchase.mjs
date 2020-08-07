@@ -14,6 +14,7 @@ class Copchase {
     this.timeRemainingInterval = null
     this.timeToStart = timeToStart
     this.isStarted = false
+    this.isTimeToStartStarted = false
     this.suspectCars = [
       'asea',
       'bison',
@@ -151,8 +152,8 @@ class Copchase {
         alt.emitClient(_player, 'player:delInvincible')
         alt.emitClient(_player, 'player:showMidsizedMessage', '~r~Вы саспект!', 'Уйдите от полицейских.', 5000)
         
-        // this.blips[_player.id] = mp.blips.new(1, suspectPosition)
-        // this.blips[_player.id].name = _player.name
+        // this.blips[_player.id] = new alt.PointBlip(1, suspectPosition.x, suspectPosition.y, suspectPosition.z)
+        // this.blips[_player.id].name = this.suspect.name
         // this.blips[_player.id].dimension = this.dimension
         // this.blips[_player.id].color = 1
       } else {  
@@ -168,7 +169,7 @@ class Copchase {
         alt.emitClient(_player, 'player:delInvincible')
         alt.emitClient(_player, 'player:showMidsizedMessage', `~w~Саспект: ~r~${this.suspect.name}`, 'Нейтрализуйте саспекта.', 5000)
 
-        // this.blips[_player.id] = mp.blips.new(1, suspectPosition)
+        // this.blips[_player.id] = new alt.PointBlip(1, this.positions.police[suspectRandomNumber].x + 2, this.positions.police[suspectRandomNumber].y, this.positions.police[suspectRandomNumber].z)
         // this.blips[_player.id].name = _player.name
         // this.blips[_player.id].dimension = this.dimension
         // this.blips[_player.id].color = 38
@@ -210,6 +211,7 @@ class Copchase {
 
   startGame() {
     let timeToStart = this.timeToStart
+    this.isTimeToStartStarted = true
     const interval = setInterval(() => {
       timeToStart = timeToStart - 1
 
@@ -223,6 +225,7 @@ class Copchase {
       if (timeToStart <= 0) {
 
         this.isStarted = true
+        this.isTimeToStartStarted = false
 
         this.pushWaitingPlayersToGame(this.waitingPlayers)
         this.selectSuspect()
@@ -232,13 +235,15 @@ class Copchase {
 
         this.spawnPlayers()
         this.spawnCars()
-        // setInterval(() => {
-        //   this.players.forEach((player, id) => {
-        //     if (this.blips[player.id] && player.health > 0) {
-        //       this.  [player.id].position = player.position;
-        //     }
-        //   })
-        // }, 1000)
+
+        alt.setInterval(() => {
+          this.players.forEach((player, id) => {
+            if (this.blips[player.id]) {
+              console.log(this.blips[player.id].pos)
+              this.blips[player.id].pos = new alt.Vector3(player.pos.x, player.pos.y, player.pos.z);
+            }
+          })
+        }, 1000)
 
         let timeRemaining = this.timeRemaining
         this.timeRemainingInterval = setInterval(() => {

@@ -4,6 +4,7 @@ import * as NativeUI from './includes/nativeui/nativeui.min.js'
 
 import './ui.mjs'
 
+
 alt.setMsPerGameMinute(30000)
 
 alt.onServer('player:death', () => {

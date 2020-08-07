@@ -26,5 +26,7 @@ registerCmd('copchase', player => {
     return alt.emitClient(player, 'player:showMidsizedMessage', '~b~Ожидание игроков...', '')
   }
 
+  if (copchase.isTimeToStartStarted) return
+
   copchase.startGame()
 })
