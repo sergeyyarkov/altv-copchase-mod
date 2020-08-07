@@ -59,7 +59,6 @@ class Copchase {
     this.players = []
     this.waitingPlayers = []
     this.cars = []
-    this.blips = {}
     this.suspect = null
     this.positions = {
       suspect: [
@@ -80,7 +79,6 @@ class Copchase {
     this.isStarted = false
     this.suspect = null
     this.players = []
-    this.blips = {}
 
     setTimeout(() => {
       this.cars.forEach(car => car.destroy())
@@ -151,28 +149,19 @@ class Copchase {
         _player.model = skins[Math.floor(Math.random() * (430 - 1 - 422) + 422)]
         alt.emitClient(_player, 'player:delInvincible')
         alt.emitClient(_player, 'player:showMidsizedMessage', '~r~Вы саспект!', 'Уйдите от полицейских.', 5000)
-        
-        // this.blips[_player.id] = new alt.PointBlip(1, suspectPosition.x, suspectPosition.y, suspectPosition.z)
-        // this.blips[_player.id].name = this.suspect.name
-        // this.blips[_player.id].dimension = this.dimension
-        // this.blips[_player.id].color = 1
+        alt.emitClient(_player, 'player:createBlip', _player)
+        alt.Player.all.forEach(_player => alt.emitClient(_player, 'player:createBlipPlayers', this.suspect))
       } else {  
         _player.pos = {
           x: this.positions.police[suspectRandomNumber].x + 2,
           y: this.positions.police[suspectRandomNumber].y,
           z: this.positions.police[suspectRandomNumber].z
         }
-        // _player.heading = 260
         _player.dimension = this.dimension
         _player.model = 's_m_y_cop_01'
         _player.giveWeapon('0x3656C8C1', 100, true)
         alt.emitClient(_player, 'player:delInvincible')
         alt.emitClient(_player, 'player:showMidsizedMessage', `~w~Саспект: ~r~${this.suspect.name}`, 'Нейтрализуйте саспекта.', 5000)
-
-        // this.blips[_player.id] = new alt.PointBlip(1, this.positions.police[suspectRandomNumber].x + 2, this.positions.police[suspectRandomNumber].y, this.positions.police[suspectRandomNumber].z)
-        // this.blips[_player.id].name = _player.name
-        // this.blips[_player.id].dimension = this.dimension
-        // this.blips[_player.id].color = 38
       }
     })
   }
@@ -236,15 +225,6 @@ class Copchase {
         this.spawnPlayers()
         this.spawnCars()
 
-        alt.setInterval(() => {
-          this.players.forEach((player, id) => {
-            if (this.blips[player.id]) {
-              console.log(this.blips[player.id].pos)
-              this.blips[player.id].pos = new alt.Vector3(player.pos.x, player.pos.y, player.pos.z);
-            }
-          })
-        }, 1000)
-
         let timeRemaining = this.timeRemaining
         this.timeRemainingInterval = setInterval(() => {
           timeRemaining = timeRemaining - 1
@@ -264,20 +244,15 @@ class Copchase {
         return true
       }
       this.midsizedMessageToWaitingPlayers(timeToStart, '', 1000)
-      // this.messageToWaitingPlayers(`[COPCHASE]: Игра начнется через: ${timeToStart}`)
     }, 1000)
   }
 
   stopGame({ winner }) {
-
     clearInterval(this.timeRemainingInterval)
 
-    this.players.forEach(_player => {
-      // if (this.blips[_player.id]) {
-      //   this.blips[_player.id].destroy();
-      // }
+    alt.Player.all.forEach(_player => alt.emitClient(_player, 'player:deleteBlipPlayers'))
 
-      
+    this.players.forEach(_player => {
       _player.removeAllWeapons()
       
       alt.setTimeout(() => {
@@ -318,7 +293,7 @@ const copchase = new Copchase({
   waitingRoomDimension: 5, 
   maxPlayers: 11,
   minPlayers: 2, 
-  timeRemaining: 2, 
+  timeRemaining: 10, 
   timeToStart: 5
 })
 
