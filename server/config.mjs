@@ -13,7 +13,8 @@ export default {
   },
   admins: [
     { socialId: '370262977' },
-    { socialId: '401448051' }
+    { socialId: '401448051' },
+    { socialId: '367807894' }
   ],
   defaultModel: 'mp_m_freemode_01'
 }

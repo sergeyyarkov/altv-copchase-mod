@@ -22,4 +22,6 @@ alt.on('playerDisconnect', (player) => {
     if (policemanIndex !== -1) copchase.players.splice(policemanIndex, 1)
     if (copchase.players.length <= 1 && copchase.suspect !== null) copchase.stopGame({ winner: 'suspect' })
   }
+  
+  alt.Player.all.forEach(_player => alt.emitClient(_player, 'player:deleteBlipPlayer', player))
 })

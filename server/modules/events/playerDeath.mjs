@@ -5,8 +5,11 @@ import config from '../../config.mjs'
 
 alt.on('playerDeath', (player) => {
   alt.emitClient(player, 'player:death')
-  alt.Player.all.forEach(_player => alt.emitClient(_player, 'player:notify', `Игрок <C>${player.name}</C> погиб`))
-
+  alt.Player.all.forEach(_player => {
+    alt.emitClient(_player, 'player:notify', `Игрок <C>${player.name}</C> погиб`)
+    alt.emitClient(_player, 'player:deleteBlipPlayer', player)
+  })
+  
   if (copchase.isStarted) {
     if (player.name === copchase.suspect.name) copchase.stopGame({ winner: 'police' })
   

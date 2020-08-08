@@ -14,16 +14,6 @@ alt.on('playerConnect', (player) => {
   player.spawn(config.spawn.x, config.spawn.y,config.spawn.z)
   player.dimension = 0
 
-  //alt.emitClient(player, 'player:createBlip', player)
-  //alt.Player.all.forEach(_player => alt.emitClient(_player, 'player:createBlipPlayers'))
   alt.emitClient(player, 'player:setInvincible')
   alt.emitClient(player, 'player:notify', '~g~Добро пожаловать на сервер!')
 })
-
-// setInterval(() => {
-//   alt.Player.all.forEach(_player => {
-//     if (blips[_player.id]) {
-//       blips[_player.id].pos = _player.pos
-//     }
-//   })
-// }, 1000)
