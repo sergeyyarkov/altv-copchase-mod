@@ -14,6 +14,18 @@ alt.on('playerConnect', (player) => {
   player.spawn(config.spawn.x, config.spawn.y,config.spawn.z)
   player.dimension = 0
 
+  alt.emitClient(player, 'webview:load')
   alt.emitClient(player, 'player:setInvincible')
   alt.emitClient(player, 'player:notify', '~g~Добро пожаловать на сервер!')
 })
+
+// sync
+alt.setInterval(() => {
+  alt.Player.all.forEach(_player => {
+    if (!_player.valid) {
+      return
+    }
+  
+    _player.setSyncedMeta('pos', _player.pos)
+  })
+}, 100)

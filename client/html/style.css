@@ -1,0 +1,54 @@
+@font-face {
+  font-family: "Pricedown";
+  src: url("./Pricedown.ttf") format("truetype");
+}
+
+* {
+  box-sizing: border-box;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;  
+}
+
+ h1, h2, h3, h4, h5, h6, p {
+   padding: 0;
+   margin: 0;
+ }
+
+.container {
+  padding: 25px;
+  color: #fff;
+  font-family: 'Pricedown';
+}
+.container .container-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.container .container-header .container-header__title {
+  font-size: 38px;
+}
+
+.container .container-header .container-header__title p {
+  display: flex;
+  -webkit-text-stroke-width: 1.6px;
+  -webkit-text-stroke-color: black;
+}
+
+.container .container-header .container-header__title svg {
+  align-items: center;
+  margin-right: 15px;
+  width: 32px;
+}
+
+.container .container-header .container-header__date {
+  font-size: 18px;
+  font-family: 'Open Sans';
+  margin-top: 5px;
+  color: #fff;
+}
+
+.container-footer #engineHealth {
+  color: #fff;
+  font-size: 28px;
+}

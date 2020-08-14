@@ -11,9 +11,9 @@ alt.on('playerDeath', (player) => {
   })
   
   if (copchase.isStarted) {
-    if (player.name === copchase.suspect.name) copchase.stopGame({ winner: 'police' })
+    if (player.id === copchase.suspect.id) copchase.stopGame({ winner: 'police' })
   
-    const policemanIndex = copchase.players.findIndex(_player => _player.name === player.name && _player.name !== copchase.suspect.name)
+    const policemanIndex = copchase.players.findIndex(_player => _player.id === player.id && _player.id !== copchase.suspect.id)
     if (policemanIndex !== -1) copchase.players.splice(policemanIndex, 1)
     if (copchase.players.length <= 1 && copchase.suspect !== null) copchase.stopGame({ winner: 'suspect' })
   }
@@ -23,5 +23,6 @@ alt.on('playerDeath', (player) => {
     player.dimension = 0
     player.removeAllWeapons()
     alt.emitClient(player, 'player:setInvincible')
+    alt.emitClient(player, 'player:deleteBlipPlayers')
   }, 5000)
 })

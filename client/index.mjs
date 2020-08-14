@@ -6,6 +6,8 @@ import './ui.mjs'
 
 import './modules/blips.mjs'
 
+const webview = new alt.WebView('http://resource/client/html/index.html')
+
 alt.setMsPerGameMinute(30000)
 
 alt.onServer('player:death', () => {
@@ -32,11 +34,20 @@ alt.onServer('player:delInvincible', () => {
 })
 
 alt.onServer('vehicle:setInto', (newVehicle) => {
-  const localPlayer = alt.Player.local.scriptID
-
-  alt.setTimeout(() => {
-    native.setPedIntoVehicle(localPlayer, newVehicle.scriptID, -1)
-  }, 400)
+  let cleared = false;
+    const interval = alt.setInterval(() => {
+        const vehicleScriptId = newVehicle.scriptID;
+        if (vehicleScriptId) {
+            native.setPedIntoVehicle(alt.Player.local.scriptID, vehicleScriptId, -1);
+            alt.clearInterval(interval);
+            cleared = true;
+        }
+    }, 10);
+    alt.setTimeout(() => {
+        if (!cleared) {
+            alt.clearInterval(interval);
+        }
+    }, 500);
 })
 
 alt.onServer('admin:setStat', () => {
@@ -45,4 +56,11 @@ alt.onServer('admin:setStat', () => {
 
 alt.onServer('admin:setInvincible', toggle => {
   native.setEntityInvincible(alt.Player.local.scriptID, toggle)
+})
+
+
+alt.onServer('webview:load', () => {
+  webview.on('ready', () => {
+    
+  })
 })

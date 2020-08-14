@@ -34,7 +34,6 @@ class Copchase {
       'vamos',
       'chino',
       'moonbeam',
-      'elegy2',
       'dubsta',
       'dominator',
       'rebla',
@@ -74,14 +73,14 @@ class Copchase {
     this.suspect = null
     this.positions = {
       suspect: [
-        { x: 395.185, y: -999.645, z: 28.755 },
-        { x: 404.691, y: -1907.0604, z: 24.723 },
-        { x: 2619.436, y: 3374.145, z: 55.619 }
+        { x: 387.006, y: -766.760, z: 28.723 },
+        { x: 442.483, y: -1507.068, z: 28.605 },
+        { x: 1924.773, y: 3819.125, z: 31.588 }
       ],
       police: [
         { x: 442.308, y: -1025.066, z: 28.231 },
-        { x: 348.865, y: -1966.507, z: 24.133 },
-        { x: 2681.454, y: 3457.637, z: 55.228 }
+        { x: 396.105, y: -1643.973, z: 28.757 },
+        { x: 1847.670, y: 3671.854, z: 33.172 }
       ]
     }
   }
@@ -99,7 +98,7 @@ class Copchase {
   }
 
   isPlayerInGame(player) {
-    if(this.players.find(_player => _player.name === player.name) !== undefined) {
+    if(this.players.find(_player => _player.id === player.id) !== undefined) {
       send(player, '{EE9A00}[COPCHASE]: {FF0000}Дождитесь окончания игры!')
       return true
     } else {
@@ -108,7 +107,7 @@ class Copchase {
   }
 
   isPlayerInWaitingRoom(player) {
-    if(this.waitingPlayers.find(_player => _player.name === player.name) !== undefined) {
+    if(this.waitingPlayers.find(_player => _player.id === player.id) !== undefined) {
       return true
     } else {
       return false
@@ -125,7 +124,7 @@ class Copchase {
   }
 
   selectSuspect() {
-    this.suspect = this.players[Math.floor(Math.random() * (this.players.length - 1 - 0 + 1) + 0)]
+    this.suspect = this.players[Math.floor(Math.random() * this.players.length)]
   }
 
   messageToPlayersInGame(message) {
@@ -143,7 +142,7 @@ class Copchase {
   }
 
   notifyPolicePlayers(message) {
-    this.players.forEach(_player => _player.name !== this.suspect.name ? alt.emitClient(_player, 'player:notify', message) : false)
+    this.players.forEach(_player => _player.id !== this.suspect.id ? alt.emitClient(_player, 'player:notify', message) : false)
   }
 
   notifySuspectPlayer(message) {
@@ -157,17 +156,13 @@ class Copchase {
 
     return new Promise((resolve, reject) => {
       this.players.forEach(_player => {
-        if (_player.name === this.suspect.name) {
+        if (_player.id === this.suspect.id) {
           _player.pos = suspectPosition
           setTimeout(() => _player.health = 200, 300)
           _player.dimension = this.dimension
           _player.model = skins[Math.floor(Math.random() * (430 - 1 - 422) + 422)]
           alt.emitClient(_player, 'player:delInvincible')
           alt.emitClient(_player, 'player:showMidsizedMessage', '~r~Вы саспект!', 'Уйдите от полицейских.', 5000)
-          this.players.forEach(_player => _player.name === this.suspect.name 
-            ? alt.emitClient(_player, 'player:createBlipPlayers', { players: this.players, color: 38 })  
-            : alt.emitClient(_player, 'player:createBlipPlayers', { players: this.players, color: 1 })
-          )
         } else {
           posX = posX + 3  
           _player.pos = {
@@ -182,6 +177,14 @@ class Copchase {
           _player.giveWeapon('0x3656C8C1', 100, true)
           alt.emitClient(_player, 'player:delInvincible')
           alt.emitClient(_player, 'player:showMidsizedMessage', `~w~Саспект: ~r~${this.suspect.name}`, 'Нейтрализуйте саспекта.', 5000)
+          alt.emitClient(_player, 'player:createBlipPlayers', { 
+            players: this.players.filter(player => player.id !== this.suspect.id), 
+            color: 38 
+          }) // create friendly blips
+          alt.emitClient(_player, 'player:createBlipPlayers', { 
+            players: this.players.filter(player => player.id === this.suspect.id), 
+            color: 1 
+          }) // create suspec blip
         }
       })
 
@@ -191,7 +194,7 @@ class Copchase {
 
   spawnCars() {
     this.players.forEach(_player => {
-      if (_player.name === this.suspect.name) {
+      if (_player.id === this.suspect.id) {
         const carSuspect = new alt.Vehicle(
           this.suspectCars[Math.floor(Math.random() * (this.suspectCars.length - 1 - 0) + 0)], 
           _player.pos.x, _player.pos.y, _player.pos.z, 
@@ -288,7 +291,7 @@ class Copchase {
   
     if (winner === 'police') {
       this.players.forEach(_player => {
-        if (_player.name !== this.suspect.name) {
+        if (_player.id !== this.suspect.id) {
           alt.emitClient(_player, 'player:showMidsizedMessage', '~g~Вы выиграли', 'Саспект был нейтрализован.')
         }
       })
@@ -297,7 +300,7 @@ class Copchase {
 
     if (winner === 'suspect') {
       this.players.forEach(_player => {
-        if (_player.name === this.suspect.name) {
+        if (_player.id === this.suspect.id) {
           alt.emitClient(_player, 'player:showMidsizedMessage', '~g~Вы выиграли', 'Вы успешно ушли от полиции.')
         } else {
           alt.emitClient(_player, 'player:showMidsizedMessage', '~r~Вы проиграли', 'Саспект скрылся.')
@@ -317,7 +320,7 @@ const copchase = new Copchase({
   maxPlayers: 11,
   minPlayers: 2, 
   timeRemaining: 10, 
-  timeToStart: 4
+  timeToStart: 5
 })
 
 export {
