@@ -15,6 +15,7 @@ class Copchase {
     this.timeToStart = timeToStart
     this.isStarted = false
     this.isTimeToStartStarted = false
+    this.isSuspectLeavesCar = false
     this.suspectCars = [
       'asea',
       'tornado',
@@ -87,6 +88,7 @@ class Copchase {
 
   setDefaultState() {
     this.timeRemainingInterval = null
+    this.isSuspectLeavesCar = false
     this.isStarted = false
     this.suspect = null
     this.players = []
@@ -174,7 +176,7 @@ class Copchase {
           setTimeout(() => _player.health = 200, 300)
           _player.dimension = this.dimension
           _player.model = 's_m_y_cop_01'
-          _player.giveWeapon('0x3656C8C1', 100, true)
+          
           alt.emitClient(_player, 'player:delInvincible')
           alt.emitClient(_player, 'player:showMidsizedMessage', `~w~Саспект: ~r~${this.suspect.name}`, 'Нейтрализуйте саспекта.', 5000)
           alt.emitClient(_player, 'player:createBlipPlayers', { 

@@ -17,6 +17,7 @@ import './modules/events/ui/admin/teleportToMe.mjs'
 import './modules/events/playerConnect.mjs'
 import './modules/events/playerDisconnect.mjs'
 import './modules/events/playerDeath.mjs'
+import './modules/events/playerEnteredVehicle.mjs'
 import './modules/events/playerLeftVehicle.mjs'
 
 /*

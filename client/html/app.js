@@ -37,7 +37,7 @@ const dateComponent = new DateComponent({ id: 'date' })
 const engineHealthComponent = new EngineHealthComponent({ id: 'engineHealth' })
 
 if ('alt' in window) {
-  alt.on('display:engineHealth', engineHealth => engineHealthComponent.renderEngineHealth(engineHealth))
+  alt.on('display:engineHealth', ({ engineHealth }) => engineHealthComponent.renderEngineHealth(engineHealth))
   alt.on('displayClear:engineHealth', () => engineHealthComponent.clearDisplay())
   alt.emit('ready')
 } else {

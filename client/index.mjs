@@ -58,9 +58,21 @@ alt.onServer('admin:setInvincible', toggle => {
   native.setEntityInvincible(alt.Player.local.scriptID, toggle)
 })
 
+alt.everyTick(() => {
+  if (alt.Player.local.vehicle) {
+    native.setEntityMaxSpeed(alt.Player.local.scriptID, 20000)
+  }
+})
+
 
 alt.onServer('webview:load', () => {
   webview.on('ready', () => {
-    
+    alt.everyTick(() => {
+      let vehicle = alt.Player.local.vehicle
+
+      if (vehicle) {
+        webview.emit('display:engineHealth', { engineHealth: native.getEntityHealth(vehicle.scriptID) })
+      }
+    })
   })
 })

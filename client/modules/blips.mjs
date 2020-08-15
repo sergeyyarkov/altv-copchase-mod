@@ -28,7 +28,7 @@ alt.onServer('player:createBlipPlayers', ({ players, color }) => {
 
 alt.onServer('player:deleteBlipPlayers', () => {
   alt.Player.all.forEach(_player => {
-    if (_player.blip) {
+    if (_player.blip && _player.blip !== null) {
       _player.blip.destroy()
       _player.blip = null
     }
@@ -36,7 +36,7 @@ alt.onServer('player:deleteBlipPlayers', () => {
 })
 
 alt.onServer('player:deleteBlipPlayer', player => {
-  if (player.blip) {
+  if (player.blip && player.blip !== null) {
     player.blip.destroy()
     player.blip = null
   }
